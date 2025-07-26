@@ -27,17 +27,7 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 
 flutter_ios_podfile_setup
 
-# --- Start of Firebase/GoogleSignIn conflict resolution ---
-$firebase_core_version = '10.25.0' # Match the version from the error log
 
-# Define a function to force a specific version on a pod
-def force_pod_version(pod_name, pod_version)
-  pod pod_name, pod_version
-end
-
-# Force GoogleUtilities to a version compatible with Firebase
-force_pod_version('GoogleUtilities', '7.13.0')
-# ---  End of Firebase/GoogleSignIn conflict resolution  ---
 
 target 'Runner' do
   use_frameworks!
