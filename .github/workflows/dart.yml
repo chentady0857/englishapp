@@ -39,6 +39,11 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      # 強制刪除舊的 Podfile.lock，避免快取汙染
+      - name: Clean Podfile.lock
+        run: rm -f Podfile.lock
+        working-directory: ios
+
       # 更新 CocoaPods repo 並安裝
       - name: Update and Install Pods
         run: |
