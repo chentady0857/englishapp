@@ -120,17 +120,31 @@ class SettingsProvider extends InheritedNotifier<AppSettings> {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize Firebase first
+  // Initialize Firebase with timeout and better error handling
   try {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
-    );
+    ).timeout(const Duration(seconds: 10));
     debugPrint('Firebase initialized successfully');
   } catch (e) {
     debugPrint('Error initializing Firebase: $e');
+    // Continue without Firebase - app should still work in offline mode
   }
 
-  final settings = await AppSettings.load();
+  // Load settings with timeout and fallback
+  AppSettings settings;
+  try {
+    settings = await AppSettings.load().timeout(const Duration(seconds: 5));
+  } catch (e) {
+    debugPrint('Error loading settings: $e');
+    // Use default settings if loading fails
+    settings = AppSettings(
+      themeMode: ThemeMode.light,
+      autoSpeak: false,
+      speechRate: 0.4,
+      speechPitch: 1.0,
+    );
+  }
 
   runApp(
     SettingsProvider(
