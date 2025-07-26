@@ -39,14 +39,16 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      # 更新 CocoaPods repo 並安裝
+      - name: Update and Install Pods
+        run: |
+          pod repo update
+          pod install
+        working-directory: ios
+
       # 建構 iOS（不簽章）
       - name: Build iOS (no codesign)
         run: flutter build ios --release --no-codesign
-
-      # 更新 CocoaPods repo
-      - name: Update Pods Repo
-        run: pod repo update
-        working-directory: ios
 
       # 建立 Payload 目錄
       - name: Create Payload Directory
