@@ -31,9 +31,9 @@ target 'Runner' do
   use_frameworks!
 
   # 強制指定舊版 pod，避免 GoogleUtilities/Environment 衝突
-  pod 'Firebase/CoreOnly', '10.13.0'
-  pod 'Firebase/Auth', '10.13.0'
-  pod 'FirebaseFirestore', '10.13.0'
+  pod 'Firebase/CoreOnly', '10.12.0'
+  pod 'Firebase/Auth', '10.12.0'
+  pod 'FirebaseFirestore', '10.12.0'
   pod 'GoogleUtilities', '7.13.0'
   pod 'GoogleUtilities/Environment', '7.13.0'
   pod 'GoogleSignIn', '7.0.0'
