@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'firestore_sync.dart';
 import 'package:flutter/services.dart' show rootBundle, HapticFeedback;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +14,8 @@ import 'firebase_options.dart';
 import 'dictionary_webview.dart';
 import 'screens/modern_login_screen.dart';
 import 'screens/main_navigation.dart';
+
+// Removed ImmediateLongPressGestureRecognizer as it's no longer needed
 
 // Utility class for shared functionality
 class AppUtils {
@@ -1260,14 +1263,12 @@ class _WordQuizPageState extends State<WordQuizPage> {
     // Save updated known words to shared preferences
     await prefs.setStringList(key, knownWords.toList());
 
-    // --- 雲端同步 ---
-    try {
-      await FirestoreSync.uploadKnownWords(knownWords.toList());
-    } catch (e) {
-      // ignore error, offline fallback
-    }
-
     final nextIndex = _findNextUnfamiliarIndex(currentIndex);
+
+    // --- 雲端同步 (非阻塞) ---
+    FirestoreSync.uploadKnownWords(knownWords.toList()).catchError((e) {
+      // ignore error, offline fallback
+    });
 
     setState(() {
       // Always update knownCount to reflect current knownWords size
@@ -2397,7 +2398,7 @@ class _AllWordsPageState extends State<AllWordsPage> {
   }
 
   Future<void> _initTts() async {
-        final settings = SettingsProvider.of(context);
+    final settings = SettingsProvider.of(context);
     await flutterTts.setLanguage("en-US");
     await flutterTts.setSpeechRate(settings.speechRate);
     await flutterTts.setPitch(settings.speechPitch);
@@ -2662,60 +2663,40 @@ class WordCard extends StatefulWidget {
 
 class _WordCardState extends State<WordCard> {
   bool _isPressed = false;
-  Timer? _longPressTimer;
 
-  @override
-  void dispose() {
-    _longPressTimer?.cancel();
-    super.dispose();
-  }
+  Future<void> _openDictionary() async {
+    // 1. 震動
+    await AppUtils.triggerHapticFeedback();
 
-  void _onTapDown(TapDownDetails details) {
-    if (mounted) {
-      setState(() => _isPressed = true);
-    }
+    // 2. 開啟字典 WebView
+    if (!mounted) return;
 
-    _longPressTimer = Timer(const Duration(milliseconds: 500), () async {
-      if (!mounted) return;
-
-      // 1. 震動
-      await AppUtils.triggerHapticFeedback();
-
-      // 2. 開啟字典 WebView
-      try {
-        await Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                DictionaryWebView(word: widget.word, isEnglishOnly: false),
-          ),
-        );
-      } catch (e) {
-        if (mounted) AppUtils.showErrorSnackBar(context, '開啟字典時發生錯誤: $e');
-      }
-    });
-  }
-
-  void _onTapUp(TapUpDetails details) {
-    _longPressTimer?.cancel();
-    if (mounted) {
-      setState(() => _isPressed = false);
-    }
-  }
-
-  void _onTapCancel() {
-    _longPressTimer?.cancel();
-    if (mounted) {
-      setState(() => _isPressed = false);
+    try {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              DictionaryWebView(word: widget.word, isEnglishOnly: false),
+        ),
+      );
+    } catch (e) {
+      if (mounted) AppUtils.showErrorSnackBar(context, '開啟字典時發生錯誤: $e');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTapDown: _onTapDown,
-      onTapUp: _onTapUp,
-      onTapCancel: _onTapCancel,
+      onLongPress: _openDictionary,
+      onLongPressStart: (_) {
+        if (mounted) setState(() => _isPressed = true);
+      },
+      onLongPressEnd: (_) {
+        if (mounted) setState(() => _isPressed = false);
+      },
+      onLongPressCancel: () {
+        if (mounted) setState(() => _isPressed = false);
+      },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 100),
         transform:
