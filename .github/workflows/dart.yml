@@ -20,47 +20,93 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.32.7'
+          flutter-version: '3.24.0'
           channel: 'stable'
 
-      # 檢查 Flutter 安裝成功
       - name: Flutter doctor
-        run: flutter doctor
+        run: flutter doctor -v
 
-      # 清理專案，避免快取問題
       - name: Clean Flutter project
         run: flutter clean
 
-      # 升級專案結構（包含iOS）
       - name: Upgrade project structure
         run: flutter create --platforms=ios,android .
 
-      # 取得相依套件
       - name: Install dependencies
         run: flutter pub get
 
-      # 強制刪除舊的 Podfile.lock，避免快取汙染
-      - name: Clean Podfile.lock
-        run: rm -f Podfile.lock
-        working-directory: ios
+      # 清理所有 CocoaPods 相關快取
+      - name: Clean CocoaPods cache
+        run: |
+          rm -rf ios/Podfile.lock
+          rm -rf ios/Pods
+          rm -rf ~/Library/Caches/CocoaPods
+          pod cache clean --all
+        working-directory: .
 
-      # 更新 CocoaPods repo 並安裝
+      # 更新 CocoaPods 到最新版本
+      - name: Update CocoaPods
+        run: |
+          sudo gem install cocoapods
+          pod --version
+
+      # 強制指定 Pod 版本解決依賴衝突
+      - name: Fix Podfile dependencies
+        run: |
+          cat >> ios/Podfile << 'EOF'
+
+          # 強制指定 GoogleUtilities 版本來解決衝突
+          pod 'GoogleUtilities/Environment', '~> 7.12'
+          pod 'GoogleUtilities/Logger', '~> 7.12'
+          pod 'GoogleUtilities/Network', '~> 7.12'
+          pod 'GoogleUtilities/NSData+zlib', '~> 7.12'
+          pod 'GoogleUtilities/Reachability', '~> 7.12'
+          pod 'GoogleUtilities/UserDefaults', '~> 7.12'
+
+          # 強制使用相容的 Firebase 版本
+          pod 'Firebase/Core', '~> 10.25.0'
+          pod 'Firebase/Auth', '~> 10.25.0'
+          pod 'Firebase/Firestore', '~> 10.25.0'
+
+          # 降級 GoogleSignIn 到相容版本
+          pod 'GoogleSignIn', '~> 7.0'
+          EOF
+
       - name: Update and Install Pods
         run: |
           pod repo update
-          pod install
+          pod install --repo-update --verbose
         working-directory: ios
 
-      # 複製 Firebase 配置到 iOS 目錄（如果存在）
       - name: Copy Firebase Config to iOS
         run: |
           if [ -f "GoogleService-Info.plist" ]; then
             cp GoogleService-Info.plist ios/Runner/
+            echo "Firebase config copied successfully"
+          else
+            echo "Warning: GoogleService-Info.plist not found"
           fi
 
-      # 建構 iOS（不簽章）
+      - name: Verify iOS Configuration
+        run: |
+          echo "=== iOS Configuration Check ==="
+          ls -la ios/Runner/
+          if [ -f "ios/Runner/GoogleService-Info.plist" ]; then
+            echo "✅ Firebase config found"
+          else
+            echo "❌ Firebase config missing"
+          fi
+          
+          echo "=== Podfile.lock Check ==="
+          if [ -f "ios/Podfile.lock" ]; then
+            echo "✅ Podfile.lock exists"
+            grep -E "(GoogleUtilities|Firebase|GoogleSignIn)" ios/Podfile.lock | head -10
+          else
+            echo "❌ Podfile.lock missing"
+          fi
+
       - name: Build iOS (no codesign)
-        run: flutter build ios --release --no-codesign
+        run: flutter build ios --release --no-codesign --verbose
 
       # 檢查 build 輸出
       - name: Check iOS build output
