@@ -44,10 +44,10 @@ dependencies:
   webview_flutter: ^4.7.0
 
   # Firebase
-  firebase_core: ^2.30.0
-  firebase_auth: ^4.19.0
-  google_sign_in: ^6.2.1
+  firebase_core: ^2.32.0
+  firebase_auth: ^4.20.0
   cloud_firestore: ^4.17.5
+  google_sign_in: ^5.4.4 # Downgraded to resolve native dependency conflict with Firebase
 
 dev_dependencies:
   flutter_test:
@@ -62,6 +62,8 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+
 
 # The following section is specific to Flutter packages.
 flutter:
