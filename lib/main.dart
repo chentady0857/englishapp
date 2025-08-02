@@ -1,7 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:flutter/foundation.dart';
+=======
+import 'package:flutter/gestures.dart';
+>>>>>>> e27d8b5 (單字卡長按-1nosuccess)
 import 'firestore_sync.dart';
 import 'package:flutter/services.dart' show rootBundle, HapticFeedback;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,6 +18,8 @@ import 'firebase_options.dart';
 import 'dictionary_webview.dart';
 import 'screens/modern_login_screen.dart';
 import 'screens/main_navigation.dart';
+
+// Removed ImmediateLongPressGestureRecognizer as it's no longer needed
 
 // Utility class for shared functionality
 class AppUtils {
@@ -1268,8 +1274,26 @@ class _WordQuizPageState extends State<WordQuizPage> {
   Future<void> handleSwipe(bool known) async {
     if (isFinished) return;
 
+<<<<<<< HEAD
     final wordKey = words[currentIndex].english;
     bool wasKnown = knownWords.contains(wordKey);
+=======
+    // Update known words set based on swipe direction
+    if (known) {
+      knownWords.add(wordKey);
+    } else {
+      knownWords.remove(wordKey);
+    }
+    // Save updated known words to shared preferences
+    await prefs.setStringList(key, knownWords.toList());
+
+    final nextIndex = _findNextUnfamiliarIndex(currentIndex);
+>>>>>>> e27d8b5 (單字卡長按-1nosuccess)
+
+    // --- 雲端同步 (非阻塞) ---
+    FirestoreSync.uploadKnownWords(knownWords.toList()).catchError((e) {
+      // ignore error, offline fallback
+    });
 
     setState(() {
       if (known) {
@@ -2454,7 +2478,7 @@ class _AllWordsPageState extends State<AllWordsPage> {
   }
 
   Future<void> _initTts() async {
-        final settings = SettingsProvider.of(context);
+    final settings = SettingsProvider.of(context);
     await flutterTts.setLanguage("en-US");
     await flutterTts.setSpeechRate(settings.speechRate);
     await flutterTts.setPitch(settings.speechPitch);
@@ -2708,3 +2732,65 @@ class _AllWordsPageState extends State<AllWordsPage> {
     );
   }
 }
+<<<<<<< HEAD
+=======
+
+class WordCard extends StatefulWidget {
+  final String word;
+  const WordCard({super.key, required this.word});
+
+  @override
+  State<WordCard> createState() => _WordCardState();
+}
+
+class _WordCardState extends State<WordCard> {
+  bool _isPressed = false;
+
+  Future<void> _openDictionary() async {
+    // 1. 震動
+    await AppUtils.triggerHapticFeedback();
+
+    // 2. 開啟字典 WebView
+    if (!mounted) return;
+
+    try {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              DictionaryWebView(word: widget.word, isEnglishOnly: false),
+        ),
+      );
+    } catch (e) {
+      if (mounted) AppUtils.showErrorSnackBar(context, '開啟字典時發生錯誤: $e');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onLongPress: _openDictionary,
+      onLongPressStart: (_) {
+        if (mounted) setState(() => _isPressed = true);
+      },
+      onLongPressEnd: (_) {
+        if (mounted) setState(() => _isPressed = false);
+      },
+      onLongPressCancel: () {
+        if (mounted) setState(() => _isPressed = false);
+      },
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 100),
+        transform:
+            _isPressed ? (Matrix4.identity()..scale(0.95)) : Matrix4.identity(),
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(widget.word, style: const TextStyle(fontSize: 24)),
+          ),
+        ),
+      ),
+    );
+  }
+}
+>>>>>>> e27d8b5 (單字卡長按-1nosuccess)
