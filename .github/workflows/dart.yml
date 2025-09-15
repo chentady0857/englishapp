@@ -10,124 +10,70 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      # 拉專案原始碼（支援 submodules）
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
-          submodules: 'recursive' # 改成 'recursive' 來正確拉取 submodule
+          fetch-depth: 0
 
-      # 安裝與本地一致的 Flutter 版本
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.24.0'
-          channel: 'stable'
+          channel: stable
 
       - name: Flutter doctor
         run: flutter doctor -v
 
-      - name: Clean Flutter project
-        run: flutter clean
-
-      - name: Upgrade project structure
-        run: flutter create --platforms=ios,android .
-
       - name: Install dependencies
         run: flutter pub get
 
-      # 清理所有 CocoaPods 相關快取
-      - name: Clean CocoaPods cache
+      - name: Set up Ruby and CocoaPods
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+      
+      - name: Install CocoaPods
         run: |
-          rm -rf ios/Podfile.lock
-          rm -rf ios/Pods
-          rm -rf ~/Library/Caches/CocoaPods
-          pod cache clean --all
-        working-directory: .
-
-      # 更新 CocoaPods 到最新版本
-      - name: Update CocoaPods
-        run: |
-          sudo gem install cocoapods
+          gem install cocoapods -N
           pod --version
 
-      # 強制指定 Pod 版本解決依賴衝突
-      - name: Fix Podfile dependencies
+      - name: Cache Pods
+        uses: actions/cache@v4
+        with:
+          path: |
+            ios/Pods
+            ~/Library/Caches/CocoaPods
+            ~/.cocoapods
+          key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+
+      - name: Pod install
         run: |
-          cat >> ios/Podfile << 'EOF'
-
-          # 強制指定 GoogleUtilities 版本來解決衝突
-          pod 'GoogleUtilities/Environment', '~> 7.12'
-          pod 'GoogleUtilities/Logger', '~> 7.12'
-          pod 'GoogleUtilities/Network', '~> 7.12'
-          pod 'GoogleUtilities/NSData+zlib', '~> 7.12'
-          pod 'GoogleUtilities/Reachability', '~> 7.12'
-          pod 'GoogleUtilities/UserDefaults', '~> 7.12'
-
-          # 強制使用相容的 Firebase 版本
-          pod 'Firebase/Core', '~> 10.25.0'
-          pod 'Firebase/Auth', '~> 10.25.0'
-          pod 'Firebase/Firestore', '~> 10.25.0'
-
-          # 降級 GoogleSignIn 到相容版本
-          pod 'GoogleSignIn', '~> 7.0'
-          EOF
-
-      - name: Update and Install Pods
-        run: |
+          cd ios
           pod repo update
-          pod install --repo-update --verbose
-        working-directory: ios
+          pod install --repo-update
 
-      - name: Copy Firebase Config to iOS
+      - name: Copy Firebase config
         run: |
           if [ -f "GoogleService-Info.plist" ]; then
             cp GoogleService-Info.plist ios/Runner/
-            echo "Firebase config copied successfully"
           else
-            echo "Warning: GoogleService-Info.plist not found"
-          fi
-
-      - name: Verify iOS Configuration
-        run: |
-          echo "=== iOS Configuration Check ==="
-          ls -la ios/Runner/
-          if [ -f "ios/Runner/GoogleService-Info.plist" ]; then
-            echo "✅ Firebase config found"
-          else
-            echo "❌ Firebase config missing"
-          fi
-          
-          echo "=== Podfile.lock Check ==="
-          if [ -f "ios/Podfile.lock" ]; then
-            echo "✅ Podfile.lock exists"
-            grep -E "(GoogleUtilities|Firebase|GoogleSignIn)" ios/Podfile.lock | head -10
-          else
-            echo "❌ Podfile.lock missing"
+            echo "GoogleService-Info.plist not found; skipping copy"
           fi
 
       - name: Build iOS (no codesign)
-        run: flutter build ios --release --no-codesign --verbose
+        run: flutter build ios --release --no-codesign
 
-      # 檢查 build 輸出
-      - name: Check iOS build output
-        run: ls -la build/ios/iphoneos/Runner.app/
+      - name: Prepare IPA
+        run: |
+          cd build/ios/iphoneos
+          rm -rf Payload
+          mkdir Payload
+          mv Runner.app Payload/
+          zip -qq -r -9 FlutterIpaExport.ipa Payload
 
-      # 建立 Payload 目錄
-      - name: Create Payload Directory
-        run: mkdir Payload
-        working-directory: build/ios/iphoneos
-
-      # 將 App 移至 Payload
-      - name: Move App to Payload
-        run: mv Runner.app Payload
-        working-directory: build/ios/iphoneos
-
-      # 壓縮成 IPA
-      - name: Zip to IPA
-        run: zip -qq -r -9 FlutterIpaExport.ipa Payload
-        working-directory: build/ios/iphoneos
-
-      # 上傳到 Release
       - name: Upload IPA to Release
         uses: svenstaro/upload-release-action@v2
         with:
