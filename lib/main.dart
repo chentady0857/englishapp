@@ -1102,6 +1102,9 @@ class _WordQuizPageState extends State<WordQuizPage> {
   bool isSpeaking = false;
   bool _isPressed = false;
   DateTime? _pressStartTime;
+  Timer? _longPressTimer;
+  bool _longPressTriggered = false;
+  StreamSubscription<User?>? _authSubscription;
 
   // Open Cambridge Dictionary for the current word in WebView
   Future<void> _openDictionary() async {
@@ -1122,9 +1125,48 @@ class _WordQuizPageState extends State<WordQuizPage> {
   @override
   void initState() {
     super.initState();
+    // 監聽登入狀態改變，切換帳號時重新載入雲端資料
+    _authSubscription = FirebaseAuth.instance.authStateChanges().listen((_) {
+      // 使用者切換或登入/登出時，重新載入雲端進度並套用
+      if (mounted) {
+        loadWordsAndProgress(reloadFromCloud: true);
+      }
+    });
     flutterTts = FlutterTts();
     _initTts();
-    loadWordsAndProgress();
+    // 首次進入頁面時載入資料
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) loadWordsAndProgress(reloadFromCloud: true);
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _initTts();
+  }
+
+  @override
+  void dispose() {
+    flutterTts.stop();
+    _longPressTimer?.cancel();
+    _authSubscription?.cancel();
+    _authSubscription = null;
+    super.dispose();
+  }
+
+  Future<void> speakWord(String word) async {
+    if (isSpeaking || !ttsReady) return;
+    final textToSpeak = word.replaceAll('/', ' ');
+    if (textToSpeak.trim().isEmpty) return;
+
+    setState(() => isSpeaking = true);
+    try {
+      await _initTts(); // Re-initialize to apply latest settings
+      await flutterTts.speak(textToSpeak);
+    } catch (e) {
+      if (mounted) setState(() => isSpeaking = false);
+    }
   }
 
   Future<void> _initTts() async {
@@ -1151,33 +1193,7 @@ class _WordQuizPageState extends State<WordQuizPage> {
     });
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _initTts();
-  }
-
-  @override
-  void dispose() {
-    flutterTts.stop();
-    super.dispose();
-  }
-
-  Future<void> speakWord(String word) async {
-    if (isSpeaking || !ttsReady) return;
-    final textToSpeak = word.replaceAll('/', ' ');
-    if (textToSpeak.trim().isEmpty) return;
-
-    setState(() => isSpeaking = true);
-    try {
-      await _initTts(); // Re-initialize to apply latest settings
-      await flutterTts.speak(textToSpeak);
-    } catch (e) {
-      if (mounted) setState(() => isSpeaking = false);
-    }
-  }
-
-  Future<void> loadWordsAndProgress() async {
+  Future<void> loadWordsAndProgress({bool reloadFromCloud = false}) async {
     setState(() {
       isLoading = true;
     });
@@ -1191,8 +1207,30 @@ class _WordQuizPageState extends State<WordQuizPage> {
     final prefs = await SharedPreferences.getInstance();
     String level = widget.initialLevel ?? temp.keys.first;
     List<Word> wordList = List<Word>.from(temp[level] ?? []);
-    Set<String> known = prefs.getStringList('known_$level')?.toSet() ?? {};
-    Set<String> favs = prefs.getStringList('favorite_words')?.toSet() ?? {};
+    // 1) 先讀取本地資料做為離線預設
+    Set<String> localKnown = prefs.getStringList('known_$level')?.toSet() ?? {};
+    Set<String> localFavs = prefs.getStringList('favorite_words')?.toSet() ?? {};
+
+    // 2) 嘗試讀取雲端資料（依目前登入的使用者）
+    Set<String> known = localKnown;
+    Set<String> favs = localFavs;
+    try {
+      if (FirebaseAuth.instance.currentUser != null) {
+        final cloud = await FirestoreSync.downloadUserData();
+        if (cloud != null) {
+          // 用雲端資料覆蓋目前登入者的狀態
+          final cloudKnown = (cloud['knownWords'] as List).cast<String>().toSet();
+          final cloudFavs = (cloud['favorites'] as List).cast<String>().toSet();
+          known = cloudKnown;
+          favs = cloudFavs;
+          // 將雲端資料同步回本地（當前 level 的 known $level）
+          await prefs.setStringList('known_$level', known.toList());
+          await prefs.setStringList('favorite_words', favs.toList());
+        }
+      }
+    } catch (_) {
+      // 讀雲端失敗時，保留本地資料即可
+    }
 
     int firstUnfamiliar = -1;
     if (widget.initialWordIndex != null) {
@@ -1211,20 +1249,13 @@ class _WordQuizPageState extends State<WordQuizPage> {
       levelWords = temp;
       selectedLevel = level;
       words = wordList;
+      currentIndex = firstUnfamiliar;
       knownWords = known;
       favoriteWords = favs;
       knownCount = known.length;
-      currentIndex = firstUnfamiliar;
-      isFinished = known.length >= words.length;
-      showChinese = false;
+      isFinished = known.length >= wordList.length;
       isLoading = false;
     });
-
-    final settings = SettingsProvider.of(context);
-    if (settings.autoSpeak && words.isNotEmpty && !isFinished) {
-      await Future.delayed(const Duration(milliseconds: 300));
-      speakWord(words[currentIndex].english);
-    }
   }
 
   int _findNextUnfamiliarIndex(int fromIndex) {
@@ -1487,25 +1518,23 @@ class _WordQuizPageState extends State<WordQuizPage> {
                         setState(() => _isPressed = true);
                         HapticFeedback.lightImpact();
                         _pressStartTime = DateTime.now();
+                        _longPressTriggered = false;
+                        _longPressTimer?.cancel();
+                        _longPressTimer = Timer(const Duration(milliseconds: 600), () async {
+                          if (!mounted) return;
+                          _longPressTriggered = true;
+                          await _openDictionary();
+                        });
                       },
                       onLongPressEnd: (_) {
-                        if (_pressStartTime != null) {
-                          final pressDuration = DateTime.now().difference(
-                            _pressStartTime!,
-                          );
-                          setState(() => _isPressed = false);
-
-                          if (pressDuration > const Duration(seconds: 1)) {
-                            _openDictionary();
-                          } else {
-                            setState(() => showChinese = !showChinese);
-                          }
-                        } else {
-                          setState(() => _isPressed = false);
-                        }
+                        _longPressTimer?.cancel();
+                        setState(() => _isPressed = false);
+                        _longPressTriggered = false;
                       },
                       onLongPressCancel: () {
+                        _longPressTimer?.cancel();
                         setState(() => _isPressed = false);
+                        _longPressTriggered = false;
                       },
                       onDoubleTap: () async {
                         final word = words[currentIndex].english;
@@ -2675,7 +2704,7 @@ class _WordCardState extends State<WordCard> {
       setState(() => _isPressed = true);
     }
 
-    _longPressTimer = Timer(const Duration(milliseconds: 500), () async {
+    _longPressTimer = Timer(const Duration(milliseconds: 600), () async {
       if (!mounted) return;
 
       // 1. 震動
