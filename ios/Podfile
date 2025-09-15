@@ -1,5 +1,5 @@
 # Uncomment this line to define a global platform for your project
-platform :ios, '14.0'
+platform :ios, '15.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -34,8 +34,8 @@ target 'Runner' do
   # 可視需要開啟
   # use_modular_headers!
 
-  # 與 Firebase 10.25.0 相容的 Google Sign-In 原生套件版本
-  pod 'GoogleSignIn', '~> 7.0'
+  # 與目前 google_sign_in_ios 插件對齊的 Google Sign-In 原生套件版本
+  pod 'GoogleSignIn', '~> 6.2'
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   target 'RunnerTests' do
@@ -45,4 +45,9 @@ end
 
 post_install do |installer|
   flutter_post_install(installer)
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
+    end
+  end
 end
