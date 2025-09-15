@@ -1,0 +1,75 @@
+﻿2025-09-15T14:52:54.1585380Z ##[group]Run flutter doctor -v
+2025-09-15T14:52:54.1585840Z [36;1mflutter doctor -v[0m
+2025-09-15T14:52:54.1656770Z shell: /bin/bash -e {0}
+2025-09-15T14:52:54.1657030Z env:
+2025-09-15T14:52:54.1657390Z   FLUTTER_ROOT: /Users/runner/hostedtoolcache/flutter/stable-3.24.0-arm64
+2025-09-15T14:52:54.1657720Z   PUB_CACHE: /Users/runner/.pub-cache
+2025-09-15T14:52:54.1657970Z ##[endgroup]
+2025-09-15T14:52:54.5873590Z 
+2025-09-15T14:52:54.5891370Z   ╔════════════════════════════════════════════════════════════════════════════╗
+2025-09-15T14:52:54.5891960Z   ║                 Welcome to Flutter! - https://flutter.dev                  ║
+2025-09-15T14:52:54.5892610Z   ║                                                                            ║
+2025-09-15T14:52:54.5893030Z   ║ The Flutter tool uses Google Analytics to anonymously report feature usage ║
+2025-09-15T14:52:54.5893740Z   ║ statistics and basic crash reports. This data is used to help improve      ║
+2025-09-15T14:52:54.5894260Z   ║ Flutter tools over time.                                                   ║
+2025-09-15T14:52:54.5894830Z   ║                                                                            ║
+2025-09-15T14:52:54.5895340Z   ║ Flutter tool analytics are not sent on the very first run. To disable      ║
+2025-09-15T14:52:54.5895830Z   ║ reporting, type 'flutter config --no-analytics'. To display the current    ║
+2025-09-15T14:52:54.5896300Z   ║ setting, type 'flutter config'. If you opt out of analytics, an opt-out    ║
+2025-09-15T14:52:54.5896850Z   ║ event will be sent, and then no further information will be sent by the    ║
+2025-09-15T14:52:54.5897360Z   ║ Flutter tool.                                                              ║
+2025-09-15T14:52:54.5897700Z   ║                                                                            ║
+2025-09-15T14:52:54.5898090Z   ║ By downloading the Flutter SDK, you agree to the Google Terms of Service.  ║
+2025-09-15T14:52:54.5898600Z   ║ The Google Privacy Policy describes how data is handled in this service.   ║
+2025-09-15T14:52:54.5899000Z   ║                                                                            ║
+2025-09-15T14:52:54.5899390Z   ║ Moreover, Flutter includes the Dart SDK, which may send usage metrics and  ║
+2025-09-15T14:52:54.5899820Z   ║ crash reports to Google.                                                   ║
+2025-09-15T14:52:54.5900230Z   ║                                                                            ║
+2025-09-15T14:52:54.5900930Z   ║ Read about data we send with crash reports:                                ║
+2025-09-15T14:52:54.5901540Z   ║ https://flutter.dev/to/crash-reporting                                     ║
+2025-09-15T14:52:54.5902050Z   ║                                                                            ║
+2025-09-15T14:52:54.5902460Z   ║ See Google's privacy policy:                                               ║
+2025-09-15T14:52:54.5902900Z   ║ https://policies.google.com/privacy                                        ║
+2025-09-15T14:52:54.5903550Z   ║                                                                            ║
+2025-09-15T14:52:54.5903990Z   ║ To disable animations in this tool, use                                    ║
+2025-09-15T14:52:54.5904430Z   ║ 'flutter config --no-cli-animations'.                                      ║
+2025-09-15T14:52:54.5904910Z   ╚════════════════════════════════════════════════════════════════════════════╝
+2025-09-15T14:52:54.5905200Z 
+2025-09-15T14:53:10.8675820Z [✓] Flutter (Channel stable, 3.24.0, on macOS 15.6 24G84 darwin-arm64, locale en-US)
+2025-09-15T14:53:10.8782760Z     • Flutter version 3.24.0 on channel stable at /Users/runner/hostedtoolcache/flutter/stable-3.24.0-arm64
+2025-09-15T14:53:10.8884630Z     • Upstream repository https://github.com/flutter/flutter.git
+2025-09-15T14:53:10.8998940Z     • Framework revision 80c2e84975 (1 year, 2 months ago), 2024-07-30 23:06:49 +0700
+2025-09-15T14:53:10.9110470Z     • Engine revision b8800d88be
+2025-09-15T14:53:10.9185870Z     • Dart version 3.5.0
+2025-09-15T14:53:10.9288590Z     • DevTools version 2.37.2
+2025-09-15T14:53:10.9390090Z 
+2025-09-15T14:53:14.4258630Z [!] Android toolchain - develop for Android devices (Android SDK version 36.0.0)
+2025-09-15T14:53:14.4358550Z     • Android SDK at /Users/runner/Library/Android/sdk
+2025-09-15T14:53:14.4459050Z     • Platform android-36-ext19, build-tools 36.0.0
+2025-09-15T14:53:14.4561000Z     • ANDROID_HOME = /Users/runner/Library/Android/sdk
+2025-09-15T14:53:14.4661540Z     • ANDROID_SDK_ROOT = /Users/runner/Library/Android/sdk
+2025-09-15T14:53:14.4762030Z     • Java binary at: /Users/runner/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.8-9.0/arm64/Contents/Home/bin/java
+2025-09-15T14:53:14.4895420Z     • Java version OpenJDK Runtime Environment Temurin-21.0.8+9 (build 21.0.8+9-LTS)
+2025-09-15T14:53:14.4896400Z     ! Some Android licenses not accepted. To resolve this, run: flutter doctor --android-licenses
+2025-09-15T14:53:14.4997670Z 
+2025-09-15T14:53:14.5099110Z [✓] Xcode - develop for iOS and macOS (Xcode 16.4)
+2025-09-15T14:53:14.5200550Z     • Xcode at /Applications/Xcode_16.4.app/Contents/Developer
+2025-09-15T14:53:14.5303440Z     • Build 16F6
+2025-09-15T14:53:14.5404730Z     • CocoaPods version 1.16.2
+2025-09-15T14:53:14.5505670Z 
+2025-09-15T14:53:14.5607030Z [✓] Chrome - develop for the web
+2025-09-15T14:53:14.5709710Z     • Chrome at /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+2025-09-15T14:53:14.5811170Z 
+2025-09-15T14:53:14.5911990Z [!] Android Studio (not installed)
+2025-09-15T14:53:14.6014100Z     • Android Studio not found; download from https://developer.android.com/studio/index.html
+2025-09-15T14:53:14.6116210Z       (or visit https://flutter.dev/to/macos-android-setup for detailed instructions).
+2025-09-15T14:53:14.6217120Z 
+2025-09-15T14:53:20.3433760Z [✓] Connected device (3 available)
+2025-09-15T14:53:20.3439160Z     • macOS (desktop)                 • macos                 • darwin-arm64   • macOS 15.6 24G84 darwin-arm64
+2025-09-15T14:53:20.3440040Z     • Mac Designed for iPad (desktop) • mac-designed-for-ipad • darwin         • macOS 15.6 24G84 darwin-arm64
+2025-09-15T14:53:20.3440660Z     • Chrome (web)                    • chrome                • web-javascript • Google Chrome 140.0.7339.133
+2025-09-15T14:53:20.3441030Z 
+2025-09-15T14:53:20.3443620Z [✓] Network resources
+2025-09-15T14:53:20.3447030Z     • All expected network resources are available.
+2025-09-15T14:53:20.3447430Z 
+2025-09-15T14:53:20.3447600Z ! Doctor found issues in 2 categories.

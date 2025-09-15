@@ -1,0 +1,76 @@
+﻿2025-09-15T14:52:07.3248190Z ##[group]Run actions/checkout@v4
+2025-09-15T14:52:07.3248570Z with:
+2025-09-15T14:52:07.3248700Z   fetch-depth: 0
+2025-09-15T14:52:07.3248850Z   repository: chentady0857/englishapp
+2025-09-15T14:52:07.3249190Z   token: ***
+2025-09-15T14:52:07.3249310Z   ssh-strict: true
+2025-09-15T14:52:07.3249440Z   ssh-user: git
+2025-09-15T14:52:07.3249580Z   persist-credentials: true
+2025-09-15T14:52:07.3249740Z   clean: true
+2025-09-15T14:52:07.3249880Z   sparse-checkout-cone-mode: true
+2025-09-15T14:52:07.3250060Z   fetch-tags: false
+2025-09-15T14:52:07.3250200Z   show-progress: true
+2025-09-15T14:52:07.3250330Z   lfs: false
+2025-09-15T14:52:07.3250450Z   submodules: false
+2025-09-15T14:52:07.3250590Z   set-safe-directory: true
+2025-09-15T14:52:07.3250840Z ##[endgroup]
+2025-09-15T14:52:07.6188640Z Syncing repository: chentady0857/englishapp
+2025-09-15T14:52:07.6189870Z ##[group]Getting Git version info
+2025-09-15T14:52:07.6190180Z Working directory is '/Users/runner/work/englishapp/englishapp'
+2025-09-15T14:52:07.6190640Z [command]/opt/homebrew/bin/git version
+2025-09-15T14:52:07.7001940Z git version 2.50.1
+2025-09-15T14:52:07.7037070Z ##[endgroup]
+2025-09-15T14:52:07.7041390Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/165d6161-0e0a-40cb-aefa-b4bc2b3cf6ea/.gitconfig'
+2025-09-15T14:52:07.7042320Z Temporarily overriding HOME='/Users/runner/work/_temp/165d6161-0e0a-40cb-aefa-b4bc2b3cf6ea' before making global git config changes
+2025-09-15T14:52:07.7042970Z Adding repository directory to the temporary git global config as a safe directory
+2025-09-15T14:52:07.7046460Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/englishapp/englishapp
+2025-09-15T14:52:07.7153160Z Deleting the contents of '/Users/runner/work/englishapp/englishapp'
+2025-09-15T14:52:07.7155880Z ##[group]Initializing the repository
+2025-09-15T14:52:07.7159840Z [command]/opt/homebrew/bin/git init /Users/runner/work/englishapp/englishapp
+2025-09-15T14:52:07.7344120Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-09-15T14:52:07.7344930Z hint: is subject to change. To configure the initial branch name to use in all
+2025-09-15T14:52:07.7345810Z hint: of your new repositories, which will suppress this warning, call:
+2025-09-15T14:52:07.7346200Z hint:
+2025-09-15T14:52:07.7347010Z hint: 	git config --global init.defaultBranch <name>
+2025-09-15T14:52:07.7347540Z hint:
+2025-09-15T14:52:07.7347930Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-09-15T14:52:07.7348470Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-09-15T14:52:07.7348830Z hint:
+2025-09-15T14:52:07.7349050Z hint: 	git branch -m <name>
+2025-09-15T14:52:07.7349280Z hint:
+2025-09-15T14:52:07.7349610Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-09-15T14:52:07.7350240Z Initialized empty Git repository in /Users/runner/work/englishapp/englishapp/.git/
+2025-09-15T14:52:07.7352100Z [command]/opt/homebrew/bin/git remote add origin https://github.com/chentady0857/englishapp
+2025-09-15T14:52:07.7424310Z ##[endgroup]
+2025-09-15T14:52:07.7424840Z ##[group]Disabling automatic garbage collection
+2025-09-15T14:52:07.7426900Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2025-09-15T14:52:07.7520850Z ##[endgroup]
+2025-09-15T14:52:07.7521390Z ##[group]Setting up auth
+2025-09-15T14:52:07.7521830Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-09-15T14:52:07.7559640Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-09-15T14:52:07.8384240Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-09-15T14:52:07.8439010Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-09-15T14:52:07.9275030Z [command]/opt/homebrew/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-09-15T14:52:07.9286720Z ##[endgroup]
+2025-09-15T14:52:07.9287120Z ##[group]Fetching the repository
+2025-09-15T14:52:07.9296440Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2025-09-15T14:52:09.3560060Z From https://github.com/chentady0857/englishapp
+2025-09-15T14:52:09.3561680Z  * [new branch]      main       -> origin/main
+2025-09-15T14:52:09.3562110Z  * [new tag]         build-3    -> build-3
+2025-09-15T14:52:09.3562410Z  * [new tag]         build-4    -> build-4
+2025-09-15T14:52:09.3626310Z [command]/opt/homebrew/bin/git branch --list --remote origin/main
+2025-09-15T14:52:09.3684690Z   origin/main
+2025-09-15T14:52:09.3691090Z [command]/opt/homebrew/bin/git rev-parse refs/remotes/origin/main
+2025-09-15T14:52:09.3737000Z 58fdc55d8ad656b9118d29b5ded037e76b1ca5d2
+2025-09-15T14:52:09.3741950Z ##[endgroup]
+2025-09-15T14:52:09.3742350Z ##[group]Determining the checkout info
+2025-09-15T14:52:09.3742780Z ##[endgroup]
+2025-09-15T14:52:09.3745610Z [command]/opt/homebrew/bin/git sparse-checkout disable
+2025-09-15T14:52:09.3809330Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+2025-09-15T14:52:09.3860430Z ##[group]Checking out the ref
+2025-09-15T14:52:09.3864060Z [command]/opt/homebrew/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-09-15T14:52:09.4199280Z Switched to a new branch 'main'
+2025-09-15T14:52:09.4201800Z branch 'main' set up to track 'origin/main'.
+2025-09-15T14:52:09.4207660Z ##[endgroup]
+2025-09-15T14:52:09.4283400Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2025-09-15T14:52:09.4339580Z 58fdc55d8ad656b9118d29b5ded037e76b1ca5d2

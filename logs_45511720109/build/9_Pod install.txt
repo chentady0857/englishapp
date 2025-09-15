@@ -1,0 +1,55 @@
+﻿2025-09-15T14:53:29.3579900Z ##[group]Run cd ios
+2025-09-15T14:53:29.3592330Z [36;1mcd ios[0m
+2025-09-15T14:53:29.3592490Z [36;1mpod repo update[0m
+2025-09-15T14:53:29.3592680Z [36;1mpod install --repo-update[0m
+2025-09-15T14:53:29.3624560Z shell: /bin/bash -e {0}
+2025-09-15T14:53:29.3624750Z env:
+2025-09-15T14:53:29.3625000Z   FLUTTER_ROOT: /Users/runner/hostedtoolcache/flutter/stable-3.24.0-arm64
+2025-09-15T14:53:29.3625570Z   PUB_CACHE: /Users/runner/.pub-cache
+2025-09-15T14:53:29.3635160Z   PATH: /Users/runner/.pub-cache/bin:/Users/runner/hostedtoolcache/flutter/stable-3.24.0-arm64/bin/cache/dart-sdk/bin:/Users/runner/hostedtoolcache/flutter/stable-3.24.0-arm64/bin:/Users/runner/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/runner/.cargo/bin:/usr/local/opt/curl/bin:/usr/local/bin:/usr/local/sbin:/Users/runner/bin:/Users/runner/.yarn/bin:/Users/runner/Library/Android/sdk/tools:/Users/runner/Library/Android/sdk/platform-tools:/Library/Frameworks/Python.framework/Versions/Current/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/usr/bin:/bin:/usr/sbin:/sbin:/Users/runner/.dotnet/tools
+2025-09-15T14:53:29.3637580Z ##[endgroup]
+2025-09-15T14:53:31.6122070Z Updating local specs repositories
+2025-09-15T14:53:31.6223740Z Adding spec repo `trunk` with CDN `https://cdn.cocoapods.org/`
+2025-09-15T14:53:31.6707610Z Analyzing dependencies
+2025-09-15T14:53:31.6767510Z cloud_firestore: Using Firebase SDK version '10.25.0' defined in 'firebase_core'
+2025-09-15T14:53:31.6785460Z firebase_auth: Using Firebase SDK version '10.25.0' defined in 'firebase_core'
+2025-09-15T14:53:31.6806400Z firebase_core: Using Firebase SDK version '10.25.0' defined in 'firebase_core'
+2025-09-15T14:53:40.8101960Z Downloading dependencies
+2025-09-15T14:53:40.8203470Z Installing AppAuth (1.7.6)
+2025-09-15T14:53:42.3431000Z Installing BoringSSL-GRPC (0.0.32)
+2025-09-15T14:56:08.0948100Z Installing Firebase (10.25.0)
+2025-09-15T14:56:12.5460470Z Installing FirebaseAppCheckInterop (10.29.0)
+2025-09-15T14:56:17.5659050Z Installing FirebaseAuth (10.25.0)
+2025-09-15T14:56:22.9483890Z Installing FirebaseCore (10.25.0)
+2025-09-15T14:56:27.3829220Z Installing FirebaseCoreExtension (10.29.0)
+2025-09-15T14:56:31.8912350Z Installing FirebaseCoreInternal (10.29.0)
+2025-09-15T14:56:36.9425200Z Installing FirebaseFirestore (10.25.0)
+2025-09-15T14:56:41.6977740Z Installing FirebaseFirestoreInternal (10.25.0)
+2025-09-15T14:56:50.0549660Z Installing FirebaseSharedSwift (10.29.0)
+2025-09-15T14:56:59.3688180Z Installing Flutter (1.0.0)
+2025-09-15T14:56:59.3688570Z Installing GTMAppAuth (1.3.1)
+2025-09-15T14:57:00.3998340Z Installing GTMSessionFetcher (2.3.0)
+2025-09-15T14:57:01.5303340Z Installing GoogleSignIn (6.2.4)
+2025-09-15T14:57:02.8187510Z Installing GoogleUtilities (7.13.3)
+2025-09-15T14:57:04.0081350Z Installing PromisesObjC (2.4.0)
+2025-09-15T14:57:05.0997680Z Installing RecaptchaInterop (100.0.0)
+2025-09-15T14:57:05.9295270Z Installing abseil (1.20240116.2)
+2025-09-15T14:57:09.0664870Z Installing cloud_firestore (4.17.5)
+2025-09-15T14:57:09.0766160Z Installing device_info_plus (0.0.1)
+2025-09-15T14:57:09.0869510Z Installing firebase_auth (4.20.0)
+2025-09-15T14:57:09.0972270Z Installing firebase_core (2.32.0)
+2025-09-15T14:57:09.1073470Z Installing flutter_tts (0.0.1)
+2025-09-15T14:57:09.1175410Z Installing gRPC-C++ (1.62.5)
+2025-09-15T14:57:27.2163230Z Installing gRPC-Core (1.62.5)
+2025-09-15T14:57:47.4577930Z Installing google_sign_in_ios (0.0.1)
+2025-09-15T14:57:47.4579750Z Installing leveldb-library (1.22.6)
+2025-09-15T14:57:48.8754930Z Installing nanopb (2.30910.0)
+2025-09-15T14:58:15.2773020Z 
+2025-09-15T14:58:15.2777650Z Installing shared_preferences_foundation (0.0.1)
+2025-09-15T14:58:15.2871230Z [!] CocoaPods did not set the base configuration of your project because your project already has a custom config set. In order for CocoaPods integration to work at all, please either set the base configurations of the target `Runner` to `Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig` or include the `Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig` in your build configuration (`Flutter/Release.xcconfig`).
+2025-09-15T14:58:15.2882980Z Installing url_launcher_ios (0.0.1)
+2025-09-15T14:58:15.2995220Z Installing vibration (1.7.5)
+2025-09-15T14:58:15.3105440Z Installing webview_flutter_wkwebview (0.0.1)
+2025-09-15T14:58:15.3207420Z Generating Pods project
+2025-09-15T14:58:15.3291500Z Integrating client project
+2025-09-15T14:58:15.3292090Z Pod installation complete! There are 12 dependencies from the Podfile and 33 total pods installed.

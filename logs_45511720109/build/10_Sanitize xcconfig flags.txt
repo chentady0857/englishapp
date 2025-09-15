@@ -1,0 +1,22 @@
+﻿2025-09-15T14:58:15.3886700Z ##[group]Run set -e
+2025-09-15T14:58:15.3887530Z [36;1mset -e[0m
+2025-09-15T14:58:15.3887950Z [36;1mexport LC_ALL=C[0m
+2025-09-15T14:58:15.3888230Z [36;1mexport LANG=C[0m
+2025-09-15T14:58:15.3890660Z [36;1mecho 'Before sanitize (matches with -G):'[0m
+2025-09-15T14:58:15.3891040Z [36;1mgrep -R --line-number -E '\s-G(\s|$)' ios || true[0m
+2025-09-15T14:58:15.3891510Z [36;1m# Remove any -G tokens from all xcconfig files (ignore errors for edge encodings)[0m
+2025-09-15T14:58:15.3892420Z [36;1mfind ios -name '*.xcconfig' -print0 | xargs -0 -I{} sh -c "sed -i '' -E 's/(^|[[:space:]])-G([[:space:]]|$)/ /g' '{}' || true"[0m
+2025-09-15T14:58:15.3893130Z [36;1mecho 'After sanitize (should be empty):'[0m
+2025-09-15T14:58:15.3901130Z [36;1mgrep -R --line-number -E '\s-G(\s|$)' ios || true[0m
+2025-09-15T14:58:15.4972340Z shell: /bin/bash -e {0}
+2025-09-15T14:58:15.4972760Z env:
+2025-09-15T14:58:15.4973110Z   FLUTTER_ROOT: /Users/runner/hostedtoolcache/flutter/stable-3.24.0-arm64
+2025-09-15T14:58:15.4974050Z   PUB_CACHE: /Users/runner/.pub-cache
+2025-09-15T14:58:15.4976140Z   PATH: /Users/runner/.pub-cache/bin:/Users/runner/hostedtoolcache/flutter/stable-3.24.0-arm64/bin/cache/dart-sdk/bin:/Users/runner/hostedtoolcache/flutter/stable-3.24.0-arm64/bin:/Users/runner/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/runner/.cargo/bin:/usr/local/opt/curl/bin:/usr/local/bin:/usr/local/sbin:/Users/runner/bin:/Users/runner/.yarn/bin:/Users/runner/Library/Android/sdk/tools:/Users/runner/Library/Android/sdk/platform-tools:/Library/Frameworks/Python.framework/Versions/Current/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/usr/bin:/bin:/usr/sbin:/sbin:/Users/runner/.dotnet/tools
+2025-09-15T14:58:15.4978200Z ##[endgroup]
+2025-09-15T14:58:15.6055940Z Before sanitize (matches with -G):
+2025-09-15T14:58:19.1487230Z ios/Pods/leveldb-library/README.md:62:cmake -G "Visual Studio 15" ..
+2025-09-15T14:58:19.1586890Z ios/Pods/leveldb-library/README.md:67:cmake -G "Visual Studio 15 Win64" ..
+2025-09-15T14:58:22.4900380Z After sanitize (should be empty):
+2025-09-15T14:58:24.7854650Z ios/Pods/leveldb-library/README.md:62:cmake -G "Visual Studio 15" ..
+2025-09-15T14:58:24.7978650Z ios/Pods/leveldb-library/README.md:67:cmake -G "Visual Studio 15 Win64" ..
