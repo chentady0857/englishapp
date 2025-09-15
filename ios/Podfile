@@ -34,6 +34,9 @@ target 'Runner' do
   # 可視需要開啟
   # use_modular_headers!
 
+  # 與 Firebase 10.25.0 相容的 Google Sign-In 原生套件版本
+  pod 'GoogleSignIn', '~> 7.0'
+
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   target 'RunnerTests' do
     inherit! :search_paths
