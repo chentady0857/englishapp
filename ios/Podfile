@@ -56,6 +56,18 @@ post_install do |installer|
     GCC_PREPROCESSOR_DEFINITIONS
   ]
 
+  # Function to strip '-G' from xcconfig files
+  def sanitize_xcconfig(config)
+    ref = config.base_configuration_reference
+    return unless ref && ref.real_path && File.exist?(ref.real_path)
+    path = ref.real_path
+    content = File.read(path)
+    sanitized = content.gsub(/(^|\s)-G(\s|$)/, ' ')
+    if sanitized != content
+      File.open(path, 'w') { |f| f.write(sanitized) }
+    end
+  end
+
   # Pods project targets
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
@@ -77,6 +89,9 @@ post_install do |installer|
       config.build_settings['OTHER_CPLUSPLUSFLAGS'] = Array(config.build_settings['OTHER_CPLUSPLUSFLAGS']).presence || ['$(inherited)']
       config.build_settings['CFLAGS'] = Array(config.build_settings['CFLAGS']).presence || ['$(inherited)']
       config.build_settings['CXXFLAGS'] = Array(config.build_settings['CXXFLAGS']).presence || ['$(inherited)']
+
+      # Also sanitize any referenced xcconfig file that could re-inject flags
+      sanitize_xcconfig(config)
     end
   end
 
@@ -100,6 +115,8 @@ post_install do |installer|
         config.build_settings['OTHER_CPLUSPLUSFLAGS'] = Array(config.build_settings['OTHER_CPLUSPLUSFLAGS']).presence || ['$(inherited)']
         config.build_settings['CFLAGS'] = Array(config.build_settings['CFLAGS']).presence || ['$(inherited)']
         config.build_settings['CXXFLAGS'] = Array(config.build_settings['CXXFLAGS']).presence || ['$(inherited)']
+
+        sanitize_xcconfig(config)
       end
     end
   end
