@@ -48,14 +48,16 @@ post_install do |installer|
     flutter_additional_ios_build_settings(target)
     target.build_configurations.each do |config|
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
+
       # 移除不支援的 clang 旗標 -G（避免 arm64-apple-ios 編譯錯誤）
-      other_cflags = config.build_settings['OTHER_CFLAGS']
-      if other_cflags.is_a?(Array)
-        config.build_settings['OTHER_CFLAGS'] = other_cflags.reject { |f| f.to_s.strip == '-G' }
-      end
-      other_cxxflags = config.build_settings['OTHER_CPLUSPLUSFLAGS']
-      if other_cxxflags.is_a?(Array)
-        config.build_settings['OTHER_CPLUSPLUSFLAGS'] = other_cxxflags.reject { |f| f.to_s.strip == '-G' }
+      %w[OTHER_CFLAGS OTHER_CPLUSPLUSFLAGS].each do |key|
+        val = config.build_settings[key]
+        if val.is_a?(Array)
+          config.build_settings[key] = val.reject { |f| f.to_s.include?('-G') }
+        elsif val.is_a?(String)
+          sanitized = val.split(' ').reject { |f| f.to_s.include?('-G') }
+          config.build_settings[key] = sanitized
+        end
       end
     end
   end
