@@ -44,22 +44,39 @@ target 'Runner' do
 end
 
 post_install do |installer|
+  # Helper to sanitize flags
+  sanitize_keys = %w[
+    OTHER_CFLAGS
+    OTHER_CPLUSPLUSFLAGS
+    CFLAGS
+    CXXFLAGS
+    OTHER_LDFLAGS
+    OTHER_SWIFT_FLAGS
+    WARNING_CFLAGS
+    GCC_PREPROCESSOR_DEFINITIONS
+  ]
+
   # Pods project targets
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
     target.build_configurations.each do |config|
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
-      # 強制重設，避免任何來源注入 -G
-      config.build_settings['OTHER_CFLAGS'] = ['$(inherited)']
-      config.build_settings['OTHER_CPLUSPLUSFLAGS'] = ['$(inherited)']
-      config.build_settings['CFLAGS'] = ['$(inherited)']
-      config.build_settings['CXXFLAGS'] = ['$(inherited)']
-      # Linker flags 保留繼承
-      if config.build_settings['OTHER_LDFLAGS'].is_a?(Array)
-        config.build_settings['OTHER_LDFLAGS'] = config.build_settings['OTHER_LDFLAGS'].reject { |f| f.to_s.include?('-G') }
-      elsif config.build_settings['OTHER_LDFLAGS'].is_a?(String)
-        config.build_settings['OTHER_LDFLAGS'] = config.build_settings['OTHER_LDFLAGS'].split(' ').reject { |f| f.to_s.include?('-G') }
+
+      sanitize_keys.each do |key|
+        val = config.build_settings[key]
+        if val.is_a?(Array)
+          config.build_settings[key] = val.map(&:to_s).reject { |f| f.start_with?('-G') }
+        elsif val.is_a?(String)
+          tokens = val.split(' ')
+          config.build_settings[key] = tokens.reject { |f| f.start_with?('-G') }
+        end
       end
+
+      # Ensure sane defaults
+      config.build_settings['OTHER_CFLAGS'] = Array(config.build_settings['OTHER_CFLAGS']).presence || ['$(inherited)']
+      config.build_settings['OTHER_CPLUSPLUSFLAGS'] = Array(config.build_settings['OTHER_CPLUSPLUSFLAGS']).presence || ['$(inherited)']
+      config.build_settings['CFLAGS'] = Array(config.build_settings['CFLAGS']).presence || ['$(inherited)']
+      config.build_settings['CXXFLAGS'] = Array(config.build_settings['CXXFLAGS']).presence || ['$(inherited)']
     end
   end
 
@@ -68,15 +85,21 @@ post_install do |installer|
     user_project.targets.each do |target|
       target.build_configurations.each do |config|
         config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
-        config.build_settings['OTHER_CFLAGS'] = ['$(inherited)']
-        config.build_settings['OTHER_CPLUSPLUSFLAGS'] = ['$(inherited)']
-        config.build_settings['CFLAGS'] = ['$(inherited)']
-        config.build_settings['CXXFLAGS'] = ['$(inherited)']
-        if config.build_settings['OTHER_LDFLAGS'].is_a?(Array)
-          config.build_settings['OTHER_LDFLAGS'] = config.build_settings['OTHER_LDFLAGS'].reject { |f| f.to_s.include?('-G') }
-        elsif config.build_settings['OTHER_LDFLAGS'].is_a?(String)
-          config.build_settings['OTHER_LDFLAGS'] = config.build_settings['OTHER_LDFLAGS'].split(' ').reject { |f| f.to_s.include?('-G') }
+
+        sanitize_keys.each do |key|
+          val = config.build_settings[key]
+          if val.is_a?(Array)
+            config.build_settings[key] = val.map(&:to_s).reject { |f| f.start_with?('-G') }
+          elsif val.is_a?(String)
+            tokens = val.split(' ')
+            config.build_settings[key] = tokens.reject { |f| f.start_with?('-G') }
+          end
         end
+
+        config.build_settings['OTHER_CFLAGS'] = Array(config.build_settings['OTHER_CFLAGS']).presence || ['$(inherited)']
+        config.build_settings['OTHER_CPLUSPLUSFLAGS'] = Array(config.build_settings['OTHER_CPLUSPLUSFLAGS']).presence || ['$(inherited)']
+        config.build_settings['CFLAGS'] = Array(config.build_settings['CFLAGS']).presence || ['$(inherited)']
+        config.build_settings['CXXFLAGS'] = Array(config.build_settings['CXXFLAGS']).presence || ['$(inherited)']
       end
     end
   end
