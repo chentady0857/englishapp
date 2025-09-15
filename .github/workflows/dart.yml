@@ -60,6 +60,9 @@ jobs:
           rm -rf ios/Pods ios/Podfile.lock
           pod deintegrate --project-directory=ios || true
 
+      - name: Regenerate Flutter iOS configs
+        run: flutter pub get
+
       - name: Pod install
         run: |
           cd ios
