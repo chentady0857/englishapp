@@ -23,28 +23,16 @@ def flutter_root
   raise "FLUTTER_ROOT not found in #{generated_xcode_build_settings_path}. Try deleting Generated.xcconfig, then run flutter pub get"
 end
 
-# --- Add this workaround for GoogleUtilities/Firebase pod conflicts ---
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'arm64'
-    end
-  end
-
-  # 強制 GoogleUtilities 版本，避免 Firebase/GoogleSignIn 衝突
-  installer.pod_targets.each do |pod|
-    if pod.name.include?('GoogleUtilities')
-      pod.specification.version = '7.13.0' # 如遇新衝突可再調整版本
-    end
-  end
-end
+# 引入 Flutter 的 CocoaPods 輔助方法
+require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
 
 flutter_ios_podfile_setup
 
 
-
 target 'Runner' do
   use_frameworks!
+  # 可視需要開啟
+  # use_modular_headers!
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   target 'RunnerTests' do
@@ -53,7 +41,5 @@ target 'Runner' do
 end
 
 post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    flutter_additional_ios_build_settings(target)
-  end
+  flutter_post_install(installer)
 end
