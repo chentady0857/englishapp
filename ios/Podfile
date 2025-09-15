@@ -49,16 +49,9 @@ post_install do |installer|
     target.build_configurations.each do |config|
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
 
-      # 移除不支援的 clang 旗標 -G（避免 arm64-apple-ios 編譯錯誤）
-      %w[OTHER_CFLAGS OTHER_CPLUSPLUSFLAGS].each do |key|
-        val = config.build_settings[key]
-        if val.is_a?(Array)
-          config.build_settings[key] = val.reject { |f| f.to_s.include?('-G') }
-        elsif val.is_a?(String)
-          sanitized = val.split(' ').reject { |f| f.to_s.include?('-G') }
-          config.build_settings[key] = sanitized
-        end
-      end
+      # 硬性重設 C/C++ 旗標，避免外部注入的 -G 造成編譯失敗
+      config.build_settings['OTHER_CFLAGS'] = ['$(inherited)']
+      config.build_settings['OTHER_CPLUSPLUSFLAGS'] = ['$(inherited)']
     end
   end
 end
