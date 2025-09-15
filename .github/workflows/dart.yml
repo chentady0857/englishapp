@@ -57,10 +57,13 @@ jobs:
 
       - name: Sanitize xcconfig flags
         run: |
+          set -e
+          export LC_ALL=C
+          export LANG=C
           echo 'Before sanitize (matches with -G):'
           grep -R --line-number -E '\s-G(\s|$)' ios || true
-          # Remove any -G tokens from all xcconfig files
-          find ios -name '*.xcconfig' -print0 | xargs -0 sed -i '' -E 's/(^|[[:space:]])-G([[:space:]]|$)/ /g'
+          # Remove any -G tokens from all xcconfig files (ignore errors for edge encodings)
+          find ios -name '*.xcconfig' -print0 | xargs -0 -I{} sh -c "sed -i '' -E 's/(^|[[:space:]])-G([[:space:]]|$)/ /g' '{}' || true"
           echo 'After sanitize (should be empty):'
           grep -R --line-number -E '\s-G(\s|$)' ios || true
 
