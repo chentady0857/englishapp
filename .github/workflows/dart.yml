@@ -55,6 +55,15 @@ jobs:
           pod repo update
           pod install --repo-update
 
+      - name: Sanitize xcconfig flags
+        run: |
+          echo 'Before sanitize (matches with -G):'
+          grep -R --line-number -E '\s-G(\s|$)' ios || true
+          # Remove any -G tokens from all xcconfig files
+          find ios -name '*.xcconfig' -print0 | xargs -0 sed -i '' -E 's/(^|[[:space:]])-G([[:space:]]|$)/ /g'
+          echo 'After sanitize (should be empty):'
+          grep -R --line-number -E '\s-G(\s|$)' ios || true
+
       - name: Copy Firebase config
         run: |
           if [ -f "GoogleService-Info.plist" ]; then
@@ -64,6 +73,11 @@ jobs:
           fi
 
       - name: Build iOS (no codesign)
+        env:
+          CFLAGS: ''
+          CXXFLAGS: ''
+          OTHER_CFLAGS: ''
+          OTHER_CPLUSPLUSFLAGS: ''
         run: flutter build ios --release --no-codesign
 
       - name: Prepare IPA

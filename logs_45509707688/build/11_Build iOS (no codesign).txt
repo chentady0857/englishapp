@@ -1,0 +1,109 @@
+﻿2025-09-15T14:32:58.5446080Z ##[group]Run flutter build ios --release --no-codesign
+2025-09-15T14:32:58.5446660Z [36;1mflutter build ios --release --no-codesign[0m
+2025-09-15T14:32:58.5482070Z shell: /bin/bash -e {0}
+2025-09-15T14:32:58.5482390Z env:
+2025-09-15T14:32:58.5482780Z   FLUTTER_ROOT: /Users/runner/hostedtoolcache/flutter/stable-3.24.0-arm64
+2025-09-15T14:32:58.5483140Z   PUB_CACHE: /Users/runner/.pub-cache
+2025-09-15T14:32:58.5485050Z   PATH: /Users/runner/.pub-cache/bin:/Users/runner/hostedtoolcache/flutter/stable-3.24.0-arm64/bin/cache/dart-sdk/bin:/Users/runner/hostedtoolcache/flutter/stable-3.24.0-arm64/bin:/Users/runner/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/runner/.cargo/bin:/usr/local/opt/curl/bin:/usr/local/bin:/usr/local/sbin:/Users/runner/bin:/Users/runner/.yarn/bin:/Users/runner/Library/Android/sdk/tools:/Users/runner/Library/Android/sdk/platform-tools:/Library/Frameworks/Python.framework/Versions/Current/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/usr/bin:/bin:/usr/sbin:/sbin:/Users/runner/.dotnet/tools
+2025-09-15T14:32:58.5487130Z ##[endgroup]
+2025-09-15T14:33:00.1122000Z Warning: Building for device with codesigning disabled. You will have to manually codesign before deploying to device.
+2025-09-15T14:33:04.9538440Z Building com.example.englishapp for device (ios-release)...
+2025-09-15T14:33:29.3184820Z Running pod install...                                             19.4s
+2025-09-15T14:34:29.1544720Z Running Xcode build...                                          
+2025-09-15T14:34:29.1642560Z Xcode build done.                                           59.8s
+2025-09-15T14:34:30.8195310Z Failed to build iOS app
+2025-09-15T14:34:30.8295210Z Error output from Xcode build:
+2025-09-15T14:34:30.8330560Z Encountered error while building for device.
+2025-09-15T14:34:30.8490140Z ↳
+2025-09-15T14:34:30.8506230Z     ** BUILD FAILED **
+2025-09-15T14:34:30.8607090Z 
+2025-09-15T14:34:30.8708070Z 
+2025-09-15T14:34:30.8810050Z Xcode's output:
+2025-09-15T14:34:30.8934350Z ↳
+2025-09-15T14:34:30.9040600Z     Writing result bundle at path:
+2025-09-15T14:34:30.9143060Z     	/var/folders/sw/lqy3v8g55m76fhwckg439jjm0000gn/T/flutter_tools.VWtZI2/flutter_ios_build_temp_dirL2WKF4/temporary_xcresult_bundle
+2025-09-15T14:34:30.9244110Z 
+2025-09-15T14:34:30.9347960Z     /Users/runner/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.22.0/darwin/webview_flutter_wkwebview/Sources/webview_flutter_wkwebview/HTTPCookieProxyAPIDelegate.swift:17:42: warning: cannot explicitly specialize instance method 'map'
+2025-09-15T14:34:30.9477420Z         let keyValueTuples = try! properties.map<[(HTTPCookiePropertyKey, Any)], PigeonError> {
+2025-09-15T14:34:30.9578650Z                                              ^
+2025-09-15T14:34:30.9680350Z     Swift.Collection.map:2:24: note: 'map' declared here
+2025-09-15T14:34:30.9782620Z     @inlinable public func map<T, E>(_ transform: (Self.Element) throws(E) -> T) throws(E) -> [T] where E : Error}
+2025-09-15T14:34:30.9884150Z                            ^
+2025-09-15T14:34:30.9986190Z     /Users/runner/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.22.0/darwin/webview_flutter_wkwebview/Sources/webview_flutter_wkwebview/SecTrustProxyAPIDelegate.swift:133:12: warning: 'SecTrustGetCertificateAtIndex' was deprecated in iOS 15.0: renamed to 'SecTrustCopyCertificateChain(_:)'
+2025-09-15T14:34:31.0089930Z         return SecTrustGetCertificateAtIndex(trust, ix)
+2025-09-15T14:34:31.0206420Z                ^
+2025-09-15T14:34:31.0308700Z     /Users/runner/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.22.0/darwin/webview_flutter_wkwebview/Sources/webview_flutter_wkwebview/SecTrustProxyAPIDelegate.swift:133:12: note: use 'SecTrustCopyCertificateChain(_:)' instead
+2025-09-15T14:34:31.0410450Z         return SecTrustGetCertificateAtIndex(trust, ix)
+2025-09-15T14:34:31.0512060Z                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2025-09-15T14:34:31.0613410Z                SecTrustCopyCertificateChain
+2025-09-15T14:34:31.0715510Z     /Users/runner/.pub-cache/hosted/pub.dev/url_launcher_ios-6.3.3/ios/url_launcher_ios/Sources/url_launcher_ios/URLLauncherPlugin.swift:22:26: warning: 'keyWindow' was deprecated in iOS 13.0: Should not be used for applications that support multiple scenes as it returns a key window across all connected scenes
+2025-09-15T14:34:31.0819370Z         UIApplication.shared.keyWindow?.rootViewController?.topViewController
+2025-09-15T14:34:31.0920800Z                              ^
+2025-09-15T14:34:31.1022890Z     /Users/runner/work/englishapp/englishapp/ios/Pods/FirebaseCoreInternal/FirebaseCore/Internal/Sources/HeartbeatLogging/HeartbeatsPayload.swift:20:24: warning: using '@_implementationOnly' without enabling library evolution for 'FirebaseCoreInternal' may lead to instability during execution
+2025-09-15T14:34:31.1122330Z       @_implementationOnly import GoogleUtilities
+2025-09-15T14:34:31.1223970Z                            ^
+2025-09-15T14:34:31.1326230Z     clang: error: unsupported option '-G' for target 'arm64-apple-ios15.0'
+2025-09-15T14:34:31.1429580Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'webview_flutter_wkwebview-webview_flutter_wkwebview_privacy' from project 'Pods')
+2025-09-15T14:34:31.1531530Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'webview_flutter_wkwebview' from project 'Pods')
+2025-09-15T14:34:31.1633190Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'vibration' from project 'Pods')
+2025-09-15T14:34:31.1636650Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'url_launcher_ios-url_launcher_ios_privacy' from project 'Pods')
+2025-09-15T14:34:31.1739160Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'url_launcher_ios' from project 'Pods')
+2025-09-15T14:34:31.1835480Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'shared_preferences_foundation-shared_preferences_foundation_privacy' from project 'Pods')
+2025-09-15T14:34:31.1938340Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'shared_preferences_foundation' from project 'Pods')
+2025-09-15T14:34:31.2040040Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'nanopb-nanopb_Privacy' from project 'Pods')
+2025-09-15T14:34:31.2143470Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'nanopb' from project 'Pods')
+2025-09-15T14:34:31.2246440Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'leveldb-library-leveldb_Privacy' from project 'Pods')
+2025-09-15T14:34:31.2346950Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'leveldb-library' from project 'Pods')
+2025-09-15T14:34:31.2448120Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'google_sign_in_ios' from project 'Pods')
+2025-09-15T14:34:31.2549990Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'gRPC-Core-grpc' from project 'Pods')
+2025-09-15T14:34:31.2651460Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'gRPC-Core' from project 'Pods')
+2025-09-15T14:34:31.2752790Z     warning: Run script build phase 'Create Symlinks to Header Folders' will be run during every build because it does not specify any outputs. To address this issue, either add output dependencies to the script phase, or configure it to run in every build by unchecking "Based on dependency analysis" in the script phase. (in target 'gRPC-Core' from project 'Pods')
+2025-09-15T14:34:31.2853410Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'gRPC-C++-grpcpp' from project 'Pods')
+2025-09-15T14:34:31.2955640Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'gRPC-C++-gRPCCertificates-Cpp' from project 'Pods')
+2025-09-15T14:34:31.3056010Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'gRPC-C++' from project 'Pods')
+2025-09-15T14:34:31.3158530Z     warning: Run script build phase 'Create Symlinks to Header Folders' will be run during every build because it does not specify any outputs. To address this issue, either add output dependencies to the script phase, or configure it to run in every build by unchecking "Based on dependency analysis" in the script phase. (in target 'gRPC-C++' from project 'Pods')
+2025-09-15T14:34:31.3266780Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'flutter_tts' from project 'Pods')
+2025-09-15T14:34:31.3368930Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'firebase_core' from project 'Pods')
+2025-09-15T14:34:31.3471950Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'firebase_auth' from project 'Pods')
+2025-09-15T14:34:31.3573530Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'device_info_plus-device_info_plus_privacy' from project 'Pods')
+2025-09-15T14:34:31.3674780Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'device_info_plus' from project 'Pods')
+2025-09-15T14:34:31.3775830Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'cloud_firestore' from project 'Pods')
+2025-09-15T14:34:31.3885650Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'abseil-xcprivacy' from project 'Pods')
+2025-09-15T14:34:31.3983330Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'abseil' from project 'Pods')
+2025-09-15T14:34:31.4090950Z     warning: Run script build phase 'Create Symlinks to Header Folders' will be run during every build because it does not specify any outputs. To address this issue, either add output dependencies to the script phase, or configure it to run in every build by unchecking "Based on dependency analysis" in the script phase. (in target 'abseil' from project 'Pods')
+2025-09-15T14:34:31.4191670Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'Runner' from project 'Runner')
+2025-09-15T14:34:31.4294980Z     note: Run script build phase 'Run Script' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'Runner' from project 'Runner')
+2025-09-15T14:34:31.4397470Z     note: Run script build phase 'Thin Binary' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'Runner' from project 'Runner')
+2025-09-15T14:34:31.4499790Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'RecaptchaInterop' from project 'Pods')
+2025-09-15T14:34:31.4603540Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'PromisesObjC-FBLPromises_Privacy' from project 'Pods')
+2025-09-15T14:34:31.4712230Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'PromisesObjC' from project 'Pods')
+2025-09-15T14:34:31.4815960Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'Pods-Runner' from project 'Pods')
+2025-09-15T14:34:31.4940240Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'GoogleUtilities-GoogleUtilities_Privacy' from project 'Pods')
+2025-09-15T14:34:31.5038090Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'GoogleUtilities' from project 'Pods')
+2025-09-15T14:34:31.5147120Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'GoogleSignIn-GoogleSignIn' from project 'Pods')
+2025-09-15T14:34:31.5267620Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'GoogleSignIn' from project 'Pods')
+2025-09-15T14:34:31.5372850Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'GTMSessionFetcher' from project 'Pods')
+2025-09-15T14:34:31.5473170Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'GTMAppAuth' from project 'Pods')
+2025-09-15T14:34:31.5474320Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'FirebaseSharedSwift' from project 'Pods')
+2025-09-15T14:34:31.5580890Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'FirebaseFirestoreInternal-FirebaseFirestoreInternal_Privacy' from project 'Pods')
+2025-09-15T14:34:31.5687180Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'FirebaseFirestoreInternal' from project 'Pods')
+2025-09-15T14:34:31.5803520Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'FirebaseFirestore-FirebaseFirestore_Privacy' from project 'Pods')
+2025-09-15T14:34:31.5909010Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'FirebaseFirestore' from project 'Pods')
+2025-09-15T14:34:31.6011000Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'FirebaseCoreInternal-FirebaseCoreInternal_Privacy' from project 'Pods')
+2025-09-15T14:34:31.6113870Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'FirebaseCoreInternal' from project 'Pods')
+2025-09-15T14:34:31.6215670Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'FirebaseCoreExtension-FirebaseCoreExtension_Privacy' from project 'Pods')
+2025-09-15T14:34:31.6317280Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'FirebaseCoreExtension' from project 'Pods')
+2025-09-15T14:34:31.6422470Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'FirebaseCore-FirebaseCore_Privacy' from project 'Pods')
+2025-09-15T14:34:31.6525310Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'FirebaseCore' from project 'Pods')
+2025-09-15T14:34:31.6634280Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'FirebaseAuth-FirebaseAuth_Privacy' from project 'Pods')
+2025-09-15T14:34:31.6743230Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'FirebaseAuth' from project 'Pods')
+2025-09-15T14:34:31.6846750Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'FirebaseAppCheckInterop' from project 'Pods')
+2025-09-15T14:34:31.6948690Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'BoringSSL-GRPC-openssl_grpc' from project 'Pods')
+2025-09-15T14:34:31.7074670Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'BoringSSL-GRPC' from project 'Pods')
+2025-09-15T14:34:31.7177720Z     warning: Run script build phase 'Create Symlinks to Header Folders' will be run during every build because it does not specify any outputs. To address this issue, either add output dependencies to the script phase, or configure it to run in every build by unchecking "Based on dependency analysis" in the script phase. (in target 'BoringSSL-GRPC' from project 'Pods')
+2025-09-15T14:34:31.7283680Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'AppAuth-AppAuthCore_Privacy' from project 'Pods')
+2025-09-15T14:34:31.7385970Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'AppAuth' from project 'Pods')
+2025-09-15T14:34:31.7485410Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'Firebase' from project 'Pods')
+2025-09-15T14:34:31.7585410Z     note: Disabling previews because SWIFT_VERSION is set and SWIFT_OPTIMIZATION_LEVEL=-O, expected -Onone (in target 'Flutter' from project 'Pods')
+2025-09-15T14:34:31.7686890Z 
+2025-09-15T14:34:31.7752770Z ##[error]Process completed with exit code 1.

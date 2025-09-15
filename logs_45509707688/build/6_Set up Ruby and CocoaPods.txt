@@ -1,0 +1,27 @@
+﻿2025-09-15T14:29:30.2309190Z ##[group]Run ruby/setup-ruby@v1
+2025-09-15T14:29:30.2309480Z with:
+2025-09-15T14:29:30.2309790Z   ruby-version: 3.1
+2025-09-15T14:29:30.2309990Z   bundler-cache: true
+2025-09-15T14:29:30.2310240Z env:
+2025-09-15T14:29:30.2310470Z   FLUTTER_ROOT: /Users/runner/hostedtoolcache/flutter/stable-3.24.0-arm64
+2025-09-15T14:29:30.2310870Z   PUB_CACHE: /Users/runner/.pub-cache
+2025-09-15T14:29:30.2311140Z ##[endgroup]
+2025-09-15T14:29:30.6994100Z ##[group]Modifying PATH
+2025-09-15T14:29:30.6997520Z Entries removed from PATH to avoid conflicts with default Ruby:
+2025-09-15T14:29:30.7005870Z   /opt/homebrew/lib/ruby/gems/3.3.0/bin
+2025-09-15T14:29:30.7006260Z   /opt/homebrew/opt/ruby@3.3/bin
+2025-09-15T14:29:30.7006610Z Entries added to PATH to use selected Ruby:
+2025-09-15T14:29:30.7007200Z   /Users/runner/hostedtoolcache/Ruby/3.1.7/arm64/bin
+2025-09-15T14:29:30.7021550Z ##[endgroup]
+2025-09-15T14:29:30.7022200Z ##[group]Print Ruby version
+2025-09-15T14:29:30.7023220Z [command]/Users/runner/hostedtoolcache/Ruby/3.1.7/arm64/bin/ruby --version
+2025-09-15T14:29:30.7556490Z ruby 3.1.7p261 (2025-03-26 revision 0a3704f218) [arm64-darwin23]
+2025-09-15T14:29:30.7605120Z Took   0.06 seconds
+2025-09-15T14:29:30.7615930Z ##[endgroup]
+2025-09-15T14:29:30.7635230Z ##[group]Installing Bundler
+2025-09-15T14:29:30.7638830Z Using Bundler 2 shipped with ruby-3.1.7
+2025-09-15T14:29:30.7639130Z Took   0.00 seconds
+2025-09-15T14:29:30.7639460Z ##[endgroup]
+2025-09-15T14:29:30.7639980Z > bundle install
+2025-09-15T14:29:30.7640280Z Could not determine gemfile path, skipping "bundle install" and caching
+2025-09-15T14:29:30.7640630Z Took   0.00 seconds

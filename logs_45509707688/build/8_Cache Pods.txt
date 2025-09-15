@@ -1,0 +1,19 @@
+﻿2025-09-15T14:29:34.4037950Z ##[group]Run actions/cache@v4
+2025-09-15T14:29:34.4038280Z with:
+2025-09-15T14:29:34.4038610Z   path: ios/Pods
+~/Library/Caches/CocoaPods
+~/.cocoapods
+
+2025-09-15T14:29:34.4038910Z   key: macOS-pods-
+2025-09-15T14:29:34.4040540Z   restore-keys: macOS-pods-
+
+2025-09-15T14:29:34.4041090Z   enableCrossOsArchive: false
+2025-09-15T14:29:34.4041860Z   fail-on-cache-miss: false
+2025-09-15T14:29:34.4042340Z   lookup-only: false
+2025-09-15T14:29:34.4042860Z   save-always: false
+2025-09-15T14:29:34.4043790Z env:
+2025-09-15T14:29:34.4044530Z   FLUTTER_ROOT: /Users/runner/hostedtoolcache/flutter/stable-3.24.0-arm64
+2025-09-15T14:29:34.4044910Z   PUB_CACHE: /Users/runner/.pub-cache
+2025-09-15T14:29:34.4047410Z   PATH: /Users/runner/.pub-cache/bin:/Users/runner/hostedtoolcache/flutter/stable-3.24.0-arm64/bin/cache/dart-sdk/bin:/Users/runner/hostedtoolcache/flutter/stable-3.24.0-arm64/bin:/Users/runner/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/runner/.cargo/bin:/usr/local/opt/curl/bin:/usr/local/bin:/usr/local/sbin:/Users/runner/bin:/Users/runner/.yarn/bin:/Users/runner/Library/Android/sdk/tools:/Users/runner/Library/Android/sdk/platform-tools:/Library/Frameworks/Python.framework/Versions/Current/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/usr/bin:/bin:/usr/sbin:/sbin:/Users/runner/.dotnet/tools
+2025-09-15T14:29:34.4050480Z ##[endgroup]
+2025-09-15T14:29:34.7935870Z Cache not found for input keys: macOS-pods-, macOS-pods-

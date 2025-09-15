@@ -1,0 +1,33 @@
+﻿2025-09-15T14:28:07.8513080Z Current runner version: '2.328.0'
+2025-09-15T14:28:07.8532380Z ##[group]Runner Image Provisioner
+2025-09-15T14:28:07.8533090Z Hosted Compute Agent
+2025-09-15T14:28:07.8533450Z Version: 20250912.392
+2025-09-15T14:28:07.8533860Z Commit: d921fda672a98b64f4f82364647e2f10b2267d0b
+2025-09-15T14:28:07.8534300Z Build Date: 2025-09-12T15:23:14Z
+2025-09-15T14:28:07.8534660Z ##[endgroup]
+2025-09-15T14:28:07.8534990Z ##[group]Operating System
+2025-09-15T14:28:07.8535330Z macOS
+2025-09-15T14:28:07.8535620Z 15.6
+2025-09-15T14:28:07.8535900Z 24G84
+2025-09-15T14:28:07.8536180Z ##[endgroup]
+2025-09-15T14:28:07.8536470Z ##[group]Runner Image
+2025-09-15T14:28:07.8536820Z Image: macos-15-arm64
+2025-09-15T14:28:07.8537120Z Version: 20250911.2324
+2025-09-15T14:28:07.8537800Z Included Software: https://github.com/actions/runner-images/blob/macos-15-arm64/20250911.2324/images/macos/macos-15-arm64-Readme.md
+2025-09-15T14:28:07.8538810Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-15-arm64%2F20250911.2324
+2025-09-15T14:28:07.8540120Z ##[endgroup]
+2025-09-15T14:28:07.8540810Z ##[group]GITHUB_TOKEN Permissions
+2025-09-15T14:28:07.8541980Z Contents: write
+2025-09-15T14:28:07.8542300Z Metadata: read
+2025-09-15T14:28:07.8542610Z ##[endgroup]
+2025-09-15T14:28:07.8544030Z Secret source: Actions
+2025-09-15T14:28:07.8544430Z Prepare workflow directory
+2025-09-15T14:28:07.8843520Z Prepare all required actions
+2025-09-15T14:28:07.8873230Z Getting action download info
+2025-09-15T14:28:08.2270770Z Download action repository 'actions/checkout@v4' (SHA:08eba0b27e820071cde6df949e0beb9ba4906955)
+2025-09-15T14:28:08.4178170Z Download action repository 'subosito/flutter-action@v2' (SHA:fd55f4c5af5b953cc57a2be44cb082c8f6635e8e)
+2025-09-15T14:28:09.6124060Z Download action repository 'ruby/setup-ruby@v1' (SHA:44511735964dcb71245e7e55f72539531f7bc0eb)
+2025-09-15T14:28:10.9668320Z Download action repository 'actions/cache@v4' (SHA:0400d5f644dc74513175e3cd8d07132dd4860809)
+2025-09-15T14:28:11.1008030Z Download action repository 'svenstaro/upload-release-action@v2' (SHA:81c65b7cd4de9b2570615ce3aad67a41de5b1a13)
+2025-09-15T14:28:12.4872930Z Getting action download info
+2025-09-15T14:28:12.6840750Z Complete job name: build

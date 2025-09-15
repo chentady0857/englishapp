@@ -1,0 +1,48 @@
+﻿2025-09-15T14:29:30.7665690Z ##[group]Run gem install cocoapods -N
+2025-09-15T14:29:30.7665990Z [36;1mgem install cocoapods -N[0m
+2025-09-15T14:29:30.7666170Z [36;1mpod --version[0m
+2025-09-15T14:29:30.7705590Z shell: /bin/bash -e {0}
+2025-09-15T14:29:30.7705800Z env:
+2025-09-15T14:29:30.7706050Z   FLUTTER_ROOT: /Users/runner/hostedtoolcache/flutter/stable-3.24.0-arm64
+2025-09-15T14:29:30.7706350Z   PUB_CACHE: /Users/runner/.pub-cache
+2025-09-15T14:29:30.7708120Z   PATH: /Users/runner/.pub-cache/bin:/Users/runner/hostedtoolcache/flutter/stable-3.24.0-arm64/bin/cache/dart-sdk/bin:/Users/runner/hostedtoolcache/flutter/stable-3.24.0-arm64/bin:/Users/runner/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/runner/.cargo/bin:/usr/local/opt/curl/bin:/usr/local/bin:/usr/local/sbin:/Users/runner/bin:/Users/runner/.yarn/bin:/Users/runner/Library/Android/sdk/tools:/Users/runner/Library/Android/sdk/platform-tools:/Library/Frameworks/Python.framework/Versions/Current/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/usr/bin:/bin:/usr/sbin:/sbin:/Users/runner/.dotnet/tools
+2025-09-15T14:29:30.7710010Z ##[endgroup]
+2025-09-15T14:29:33.2715820Z Successfully installed nanaimo-0.4.0
+2025-09-15T14:29:33.2717940Z Successfully installed colored2-3.1.2
+2025-09-15T14:29:33.2719790Z Successfully installed claide-1.1.0
+2025-09-15T14:29:33.2720150Z Successfully installed CFPropertyList-3.0.7
+2025-09-15T14:29:33.2720510Z Successfully installed atomos-0.1.3
+2025-09-15T14:29:33.2721060Z Successfully installed xcodeproj-1.27.0
+2025-09-15T14:29:33.2721450Z Successfully installed ruby-macho-2.5.1
+2025-09-15T14:29:33.2722120Z Successfully installed nap-1.1.0
+2025-09-15T14:29:33.2723250Z Successfully installed molinillo-0.8.0
+2025-09-15T14:29:33.2723640Z Successfully installed gh_inspector-1.1.3
+2025-09-15T14:29:33.2724040Z Successfully installed fourflusher-2.3.1
+2025-09-15T14:29:33.2724350Z Successfully installed escape-0.0.4
+2025-09-15T14:29:33.2724770Z Successfully installed cocoapods-try-1.2.0
+2025-09-15T14:29:33.2725440Z Successfully installed netrc-0.11.0
+2025-09-15T14:29:33.2734520Z Successfully installed cocoapods-trunk-1.6.0
+2025-09-15T14:29:33.2735030Z Successfully installed cocoapods-search-1.0.1
+2025-09-15T14:29:33.2735520Z Successfully installed cocoapods-plugins-1.0.0
+2025-09-15T14:29:33.2865330Z Successfully installed cocoapods-downloader-2.1
+2025-09-15T14:29:33.2966940Z Successfully installed cocoapods-deintegrate-1.0.5
+2025-09-15T14:29:33.3068100Z Successfully installed ffi-1.17.2-arm64-darwin
+2025-09-15T14:29:33.3169170Z Successfully installed ethon-0.15.0
+2025-09-15T14:29:33.3269960Z Successfully installed typhoeus-1.5.0
+2025-09-15T14:29:33.3372810Z Successfully installed public_suffix-4.0.7
+2025-09-15T14:29:33.3474290Z Successfully installed fuzzy_match-2.0.4
+2025-09-15T14:29:33.3575530Z Successfully installed concurrent-ruby-1.3.5
+2025-09-15T14:29:33.3676990Z Successfully installed httpclient-2.9.0
+2025-09-15T14:29:33.3779530Z A new major version is available for Algolia! Please now use the https://rubygems.org/gems/algolia gem to get the latest features.
+2025-09-15T14:29:33.3881700Z Successfully installed algoliasearch-1.27.5
+2025-09-15T14:29:33.3984200Z Successfully installed addressable-2.8.7
+2025-09-15T14:29:33.4088810Z Successfully installed tzinfo-2.0.6
+2025-09-15T14:29:33.4354840Z Successfully installed securerandom-0.4.1
+2025-09-15T14:29:33.4457840Z Successfully installed i18n-1.14.7
+2025-09-15T14:29:33.4587520Z Successfully installed connection_pool-2.5.4
+2025-09-15T14:29:33.4839060Z Successfully installed benchmark-0.4.1
+2025-09-15T14:29:33.4940500Z Successfully installed activesupport-7.2.2.2
+2025-09-15T14:29:33.5043360Z Successfully installed cocoapods-core-1.16.2
+2025-09-15T14:29:33.5144000Z Successfully installed cocoapods-1.16.2
+2025-09-15T14:29:33.5246670Z 36 gems installed
+2025-09-15T14:29:34.2071260Z 1.16.2
