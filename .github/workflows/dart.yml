@@ -15,7 +15,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Select Xcode 15.4
+      - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: '16.4'
@@ -37,22 +37,11 @@ jobs:
         with:
           ruby-version: '3.1'
           bundler-cache: true
-      
-      - name: Install CocoaPods
+
+      - name: Ensure CocoaPods
         run: |
           gem install cocoapods -N
           pod --version
-
-      - name: Cache Pods
-        uses: actions/cache@v4
-        with:
-          path: |
-            ios/Pods
-            ~/Library/Caches/CocoaPods
-            ~/.cocoapods
-          key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pods-
 
       - name: Clean iOS build and pods
         run: |
@@ -69,19 +58,19 @@ jobs:
           pod repo update
           pod install --repo-update
 
-      - name: Sanitize xcconfig flags
+      - name: Sanitize xcconfig flags (remove any -G everywhere)
         run: |
           set -e
           export LC_ALL=C
           export LANG=C
-          echo 'Before sanitize (matches with -G):'
-          grep -R --line-number -E '\s-G(\s|$)' ios || true
-          # Remove any -G tokens from all xcconfig files (ignore errors for edge encodings)
-          find ios -name '*.xcconfig' -print0 | xargs -0 -I{} sh -c "sed -i '' -E 's/(^|[[:space:]])-G([[:space:]]|$)/ /g' '{}' || true"
+          echo 'Before sanitize (all hits for -G):'
+          grep -R --line-number --color=never '\-G' ios || true
+          # 僅處理 *.xcconfig 檔案，避免影響其他檔案
+          find ios -type f -name '*.xcconfig' -print0 | xargs -0 -I{} sh -c "sed -i '' -E 's/(^|[[:space:]])-G([[:space:]]|$)/ /g' '{}' || true"
           echo 'After sanitize (should be empty):'
-          grep -R --line-number -E '\s-G(\s|$)' ios || true
+          grep -R --line-number --color=never '\-G' ios || true
 
-      - name: Copy Firebase config
+      - name: Copy Firebase config (optional)
         run: |
           if [ -f "GoogleService-Info.plist" ]; then
             cp GoogleService-Info.plist ios/Runner/
@@ -89,27 +78,20 @@ jobs:
             echo "GoogleService-Info.plist not found; skipping copy"
           fi
 
-      - name: Build iOS (no codesign)
+      - name: Build IPA (no codesign)
         env:
           CFLAGS: ''
           CXXFLAGS: ''
           OTHER_CFLAGS: ''
           OTHER_CPLUSPLUSFLAGS: ''
-        run: flutter build ios --release --no-codesign
-
-      - name: Prepare IPA
         run: |
-          cd build/ios/iphoneos
-          rm -rf Payload
-          mkdir Payload
-          mv Runner.app Payload/
-          zip -qq -r -9 FlutterIpaExport.ipa Payload
+          flutter build ipa --release --no-codesign -v
 
       - name: Upload IPA to Release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: build/ios/iphoneos/FlutterIpaExport.ipa
+          file: build/ios/ipa/*.ipa
           asset_name: englishapp-${{ github.run_number }}.ipa
           tag: build-${{ github.run_number }}
           overwrite: true
