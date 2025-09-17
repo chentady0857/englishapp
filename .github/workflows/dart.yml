@@ -15,13 +15,17 @@ jobs:
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.3' # 改成你專案的 Flutter 版本
+          flutter-version: '3.24.3' # 改成你專案的版本
 
       - name: Install dependencies
         run: flutter pub get
 
+      # 關鍵：用 generic platform 避開錯誤
       - name: Build iOS (no codesign)
-        run: flutter build ios --release --no-codesign
+        run: |
+          flutter build ios --release --no-codesign \
+            --target-platform ios \
+            --build-name=1.0.0 --build-number=1
 
       - name: Create IPA
         run: |
