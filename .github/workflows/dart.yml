@@ -1,101 +1,37 @@
-name: Build iOS IPA
+name: Build Unsigned iOS IPA
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [ "main" ]
 
 jobs:
   build:
-    permissions:
-      contents: write
     runs-on: macos-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Select Xcode
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: '16.4'
-
-      - name: Set up Flutter
+      - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.0'
-          channel: stable
-
-      - name: Flutter doctor
-        run: flutter doctor -v
+          flutter-version: '3.24.3' # 改成你專案的 Flutter 版本
 
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Set up Ruby and CocoaPods
-        uses: ruby/setup-ruby@v1
+      - name: Build iOS (no codesign)
+        run: flutter build ios --release --no-codesign
+
+      - name: Create IPA
+        run: |
+          mkdir Payload
+          cp -r build/ios/iphoneos/Runner.app Payload/
+          zip -r unsigned.ipa Payload
+          rm -rf Payload
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
         with:
-          ruby-version: '3.1'
-          bundler-cache: true
-
-      - name: Ensure CocoaPods
-        run: |
-          gem install cocoapods -N
-          pod --version
-
-      - name: Clean iOS build and ensure iOS project
-        run: |
-          flutter clean
-          # 若 ios 專案不存在，先用 flutter create 生成
-          if [ ! -d "ios" ] || [ ! -f "ios/Runner.xcodeproj/project.pbxproj" ]; then
-            echo "iOS project missing, running flutter create ."
-            flutter create .
-          fi
-          # 不再使用 pod deintegrate，避免在缺 iOS 專案時失敗
-
-      - name: Regenerate Flutter iOS configs
-        run: flutter pub get
-
-      - name: Pod install
-        run: |
-          cd ios
-          pod repo update
-          pod install --repo-update
-
-      - name: Sanitize xcconfig flags (remove any -G everywhere)
-        run: |
-          set -e
-          export LC_ALL=C
-          export LANG=C
-          echo 'Before sanitize (all hits for -G):'
-          grep -R --line-number --color=never '\-G' ios || true
-          find ios -type f -name '*.xcconfig' -print0 | xargs -0 -I{} sh -c "sed -i '' -E 's/(^|[[:space:]])-G([[:space:]]|$)/ /g' '{}' || true"
-          echo 'After sanitize (should be empty):'
-          grep -R --line-number --color=never '\-G' ios || true
-
-      - name: Copy Firebase config (optional)
-        run: |
-          if [ -f "GoogleService-Info.plist" ]; then
-            cp GoogleService-Info.plist ios/Runner/
-          else
-            echo "GoogleService-Info.plist not found; skipping copy"
-          fi
-
-      - name: Build IPA (no codesign)
-        env:
-          CFLAGS: ''
-          CXXFLAGS: ''
-          OTHER_CFLAGS: ''
-          OTHER_CPLUSPLUSFLAGS: ''
-        run: |
-          flutter build ipa --release --no-codesign -v
-
-      - name: Upload IPA to Release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: build/ios/ipa/*.ipa
-          asset_name: englishapp-${{ github.run_number }}.ipa
-          tag: build-${{ github.run_number }}
-          overwrite: true
-          body: "Build ${{ github.run_number }} release"
+          name: unsigned-ipa
+          path: unsigned.ipa
