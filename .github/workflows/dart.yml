@@ -43,11 +43,15 @@ jobs:
           gem install cocoapods -N
           pod --version
 
-      - name: Clean iOS build and pods
+      - name: Clean iOS build and ensure iOS project
         run: |
           flutter clean
-          rm -rf ios/Pods ios/Podfile.lock
-          pod deintegrate --project-directory=ios || true
+          # 若 ios 專案不存在，先用 flutter create 生成
+          if [ ! -d "ios" ] || [ ! -f "ios/Runner.xcodeproj/project.pbxproj" ]; then
+            echo "iOS project missing, running flutter create ."
+            flutter create .
+          fi
+          # 不再使用 pod deintegrate，避免在缺 iOS 專案時失敗
 
       - name: Regenerate Flutter iOS configs
         run: flutter pub get
@@ -65,7 +69,6 @@ jobs:
           export LANG=C
           echo 'Before sanitize (all hits for -G):'
           grep -R --line-number --color=never '\-G' ios || true
-          # 僅處理 *.xcconfig 檔案，避免影響其他檔案
           find ios -type f -name '*.xcconfig' -print0 | xargs -0 -I{} sh -c "sed -i '' -E 's/(^|[[:space:]])-G([[:space:]]|$)/ /g' '{}' || true"
           echo 'After sanitize (should be empty):'
           grep -R --line-number --color=never '\-G' ios || true
